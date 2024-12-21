@@ -4,7 +4,12 @@ import { BookCard } from "@/components/BookCard";
 import { Chatbot } from "@/components/Chatbot";
 import { books } from "@/data/books";
 
-const CLERK_PUBLISHABLE_KEY = "your_clerk_key"; // Replace with actual key
+// Get the publishable key from environment variables
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || "";
+
+if (!CLERK_PUBLISHABLE_KEY) {
+  console.error("Missing Clerk Publishable Key");
+}
 
 const Index = () => {
   return (
