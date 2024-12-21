@@ -5,7 +5,7 @@ import { Chatbot } from "@/components/Chatbot";
 import { books } from "@/data/books";
 
 // Get the publishable key from environment variables
-const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || "";
+const CLERK_PUBLISHABLE_KEY = "pk_test_dmFzdC1nYXJmaXNoLTI4LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 if (!CLERK_PUBLISHABLE_KEY) {
   console.error("Missing Clerk Publishable Key");
