@@ -2,9 +2,10 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { Navbar } from "@/components/Navbar";
 import { BookCard } from "@/components/BookCard";
 import { Chatbot } from "@/components/Chatbot";
-import { books } from "@/data/books";
+import { useQuery } from "@tanstack/react-query";
+import { fetchBooks } from "@/services/api";
+import { useState } from "react";
 
-// Get the publishable key from environment variables
 const CLERK_PUBLISHABLE_KEY = "pk_test_dmFzdC1nYXJmaXNoLTI4LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 if (!CLERK_PUBLISHABLE_KEY) {
@@ -12,6 +13,22 @@ if (!CLERK_PUBLISHABLE_KEY) {
 }
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
+
+  const { data: books = [], isLoading, error } = useQuery({
+    queryKey: ['books', searchQuery, selectedGenre],
+    queryFn: () => fetchBooks(searchQuery, selectedGenre),
+  });
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="flex justify-center items-center min-h-screen">Error loading books</div>;
+  }
+
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <div className="min-h-screen bg-bookstore-background">
